@@ -2,14 +2,21 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
+import ApolloClient from "apollo-client";
+import { ApolloProvider } from "react-apollo";
+import { HashRouter, Route, IndexRoute } from "react-router-dom";
+import App from "./components/App";
 
-const Root = () => {
-  return <div>Auth Starter</div>;
-};
-
+const client = new ApolloClient({
+  dataIdfroObject: (o) => o.id,
+});
 ReactDOM.render(
   <React.StrictMode>
-    <Root />
+    <ApolloProvider client={client}>
+      <HashRouter>
+        <Route path="/" component={App} />
+      </HashRouter>
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
