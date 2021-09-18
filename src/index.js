@@ -2,19 +2,36 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import ApolloClient from "apollo-client";
-import { ApolloProvider } from "react-apollo";
-import { HashRouter, Route, IndexRoute } from "react-router-dom";
+import { ApolloClient, ApolloProvider } from "@apollo/client";
+import { createHttpLink } from "apollo-link-http";
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { HashRouter, Route, Switch } from "react-router-dom";
 import App from "./components/App";
+import LoginForm from "./components/LoginForm";
+
+const cache = new InMemoryCache();
+
+const httpLink = createHttpLink({
+  uri: "http://localhost:4000/graphql",
+});
 
 const client = new ApolloClient({
-  dataIdfroObject: (o) => o.id,
+  dataIdFromObject: (o) => o.id,
+  link: httpLink,
+  cache,
 });
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <HashRouter>
-        <Route path="/" component={App} />
+        <App>
+          <Switch>
+            <Route exact path="/" ccomponent={<div>test</div>} />
+            {/* <Route exact path="/dashboard" component={Dashboard} /> */}
+            <Route exact path="/login" component={LoginForm} />
+            {/* <Route exact path="/signup" component={SignupForm} /> */}
+          </Switch>
+        </App>
       </HashRouter>
     </ApolloProvider>
   </React.StrictMode>,

@@ -1,6 +1,7 @@
 const express = require("express");
 const models = require("./models");
 const expressGraphQL = require("express-graphql");
+const cors = require(`cors`);
 const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
@@ -12,8 +13,7 @@ const schema = require("./schema/schema");
 const app = express();
 
 // Replace with your mongoLab URI
-const MONGO_URI =
-  "mongodb+srv://anmol:anmolsiddhi@auth.ggcsm.mongodb.net/test";
+const MONGO_URI = "mongodb+srv://anmol:anmolsiddhi@auth.ggcsm.mongodb.net/test";
 
 // Mongoose's built in promise library is deprecated, replace it with ES2015 Promise
 mongoose.Promise = global.Promise;
@@ -47,6 +47,11 @@ app.use(
 // assign the current user to the 'req.user' object.  See also servces/auth.js
 app.use(passport.initialize());
 app.use(passport.session());
+
+//allow cors in express
+// please check this article
+// https://www.prisma.io/blog/enabling-cors-for-express-graphql-apollo-server-1ef999bfb38d
+app.use(cors());
 
 // Instruct Express to pass on any request made to the '/graphql' route
 // to the GraphQL instance.
