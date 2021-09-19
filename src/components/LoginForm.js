@@ -17,6 +17,9 @@ class LoginForm extends Component {
       await this.props.mutate({
         variables: { email, password },
         refetchQueries: [{ query }],
+        //this is needed so that we don't go to the dashboard before the user was fetched
+        //otherwise we'd get redirected to login from the requireAuth HOC
+        awaitRefetchQueries: true,
       });
       this.props.history.push("/dashboard");
     } catch (error) {

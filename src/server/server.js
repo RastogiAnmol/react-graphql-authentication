@@ -51,7 +51,12 @@ app.use(passport.session());
 //allow cors in express
 // please check this article
 // https://www.prisma.io/blog/enabling-cors-for-express-graphql-apollo-server-1ef999bfb38d
-app.use(cors());
+// enable cors
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true, // <-- REQUIRED backend setting
+};
+app.use(cors(corsOptions));
 
 // Instruct Express to pass on any request made to the '/graphql' route
 // to the GraphQL instance.

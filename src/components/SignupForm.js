@@ -1,28 +1,21 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import AuthForm from "./AuthForm";
 import { useMutation } from "@apollo/client";
-import { FETCH_USER, SIGNUP } from "../queries/apollloQueries";
+import mutation from "../mutations/Signup";
+import query from "../queries/CurrentUser";
 import { withRouter } from "react-router";
 
 const SignupForm = ({ history }) => {
-  const [signupMutation] = useMutation(SIGNUP);
+  const [signupMutation] = useMutation(mutation);
   const [errors, setErrors] = useState([]);
-};
 
-class SignupForm extends Component {
-  constructor(props){
-    super(props)
-    state = {
-        errors:[]
-    }
-  }
-  onSignup = ({ email, password }) => {
+  const onSignup = ({ email, password }) => {
     signupMutation({
       variables: {
         email,
         password,
       },
-      refetchQueries: [{ query: FETCH_USER }],
+      refetchQueries: [{ query: query }],
     })
       .then(() => history.push("/dashboard"))
       .catch((res) => {
@@ -33,13 +26,13 @@ class SignupForm extends Component {
         setErrors(errs);
       });
   };
-  render() {
-    return (
-      <div>
-        <h3>Signup</h3>
-        <AuthForm errors={errors} onSubmit={this.onSignup} />
-      </div>
-    );
-  }
-}
+
+  return (
+    <div>
+      <h3>Signup</h3>
+      <AuthForm errors={errors} onSubmit={onSignup} />
+    </div>
+  );
+};
+
 export default withRouter(SignupForm);

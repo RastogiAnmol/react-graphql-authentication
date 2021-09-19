@@ -10,7 +10,7 @@ class AuthForm extends Component {
   onSubmit = (e) => {
     e.preventDefault();
     const { email, password } = this.state;
-    this.props.onSubmit(email, password);
+    this.props.onSubmit({email, password});
   };
   render() {
     const { errors } = this.props;
@@ -36,12 +36,15 @@ class AuthForm extends Component {
               onChange={this.onPasswordChange}
             />
           </div>
-          {errors &&
-            errors.map((err) => (
-              <div className="errors" key={err}>
-                {err}
-              </div>
-            ))}
+          <div className="errors" style={{color:"red"}}>
+            {errors &&
+              errors.map((err) => (
+                <div className="errors" key={err}>
+                  {err}
+                </div>
+              ))}
+          </div>
+
           <button className="btn">Submit</button>
         </form>
       </div>
