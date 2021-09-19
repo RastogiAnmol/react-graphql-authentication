@@ -8,8 +8,6 @@ import {
   InMemoryCache,
   createHttpLink,
 } from "@apollo/client";
-// import { createHttpLink } from "apollo-link-http";
-// import { InMemoryCache } from "apollo-cache-inmemory";
 import { HashRouter, Route, Switch } from "react-router-dom";
 import App from "./components/App";
 import LoginForm from "./components/LoginForm";
@@ -26,9 +24,9 @@ const cache = new InMemoryCache();
 const httpLink = createHttpLink({
   credentials: "include",
   uri: "http://localhost:4000/graphql",
-//   opts:{
-//     credentials:'include'
-// },
+  //   opts:{
+  //     credentials:'include'
+  // },
 });
 
 const client = new ApolloClient({
@@ -36,7 +34,7 @@ const client = new ApolloClient({
   link: httpLink,
   cache,
   //   credentials: "same-origin"
-//   credentials: "include",
+  //   credentials: "include",
 });
 ReactDOM.render(
   <React.StrictMode>
